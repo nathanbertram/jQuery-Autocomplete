@@ -51,7 +51,9 @@
   }
   
   $.fn.autocomplete = function(options) {
-    return new Autocomplete(this.get(0)||$('<input />'), options);
+    return this.each(function(index, value){
+      new Autocomplete(value, options);
+    });
   };
 
 
