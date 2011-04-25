@@ -231,6 +231,17 @@
       return ret;
     },
     
+    beforeServiceUrl: function(url) {
+      var me;
+      me = this;
+      beforeServiceUrl = me.options.beforeServiceUrl;
+      if ($.isFunction(beforeServiceUrl)){
+        return beforeServiceUrl(url);
+      }else{
+        return url;
+      }
+    },
+    
     getSuggestions: function(q) {
       var cr, me;
       cr = this.isLocal ? this.getSuggestionsLocal(q) : this.cachedResponse[q];
@@ -241,7 +252,7 @@
       } else if (!this.isBadQuery(q)) {
         me = this;
         me.options.params.query = q;
-        $.get(this.serviceUrl, me.options.params, function(txt) { me.processResponse(txt); }, 'text');
+        $.get(beforeServiceUrl(this.serviceUrl), me.options.params, function(txt) { me.processResponse(txt); }, 'text');
       }
     },
 
