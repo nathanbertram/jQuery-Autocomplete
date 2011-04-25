@@ -236,7 +236,7 @@
       me = this;
       beforeServiceUrl = me.options.beforeServiceUrl;
       if ($.isFunction(beforeServiceUrl)){
-        return beforeServiceUrl(url, me);
+        return beforeServiceUrl(url, me.el);
       }else{
         return url;
       }
