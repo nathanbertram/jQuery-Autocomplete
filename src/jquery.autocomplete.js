@@ -44,7 +44,8 @@
       params: {},
       fnFormatResult: fnFormatResult,
       delimiter: null,
-      zIndex: 9999
+      zIndex: 9999,
+      onResponse: null
     };
     this.initialize();
     this.setOptions(options);
@@ -296,10 +297,15 @@
     },
 
     processResponse: function(text) {
-      var response;
+      var response, me;
+      me = this;
       try {
         response = eval('(' + text + ')');
       } catch (err) { return; }
+      
+      onResponse = me.options.onResponse;
+      if ($.isFunction(onResponse)) { onResponse(me, response); }
+      
       if (!$.isArray(response.data)) { response.data = []; }
       if(!this.options.noCache){
         this.cachedResponse[response.query] = response;
